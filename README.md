@@ -1,5 +1,4 @@
-##sucursal-service
-
+# sucursal-service
 Api para crear y consultar los datos de una sucursal en particular o la mas cercana a una localización dada
 
 
@@ -8,7 +7,7 @@ Api para crear y consultar los datos de una sucursal en particular o la mas cerc
 
 
 ## Variables de entorno
-Se deben configuar las siguientes variables de entorno
+Se deben configurar las siguientes variables de entorno
 - com.fravega.db.host=localhost
 - com.fravega.db.port=3306
 - com.fravega.db.name=fravega
@@ -23,9 +22,13 @@ Consola
 
 Docker
 
-    > mvn clean package
     > docker build -t fravega/sucursal-service .
-    > docker run -p 8888:8182 fravega/sucursal-service
+    > docker run -p 8882:8182 fravega/sucursal-service
+
+Docker Compose
+
+    > docker-compose up --build
+    > cat fravega-data.sql | docker exec -i mariadb-sucursal /usr/bin/mysql -u root --password=admin1234 fravega
 
 
 ## Endpoints

@@ -1,0 +1,24 @@
+version: '2'
+services:
+  sucursal-server:
+    container_name: sucursal-service
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: sucursal-service:latest
+    ports:
+      - 8882:8182
+    links:
+      - mariadb-server
+  mariadb-server:
+    container_name: mariadb-sucursal
+    image: mariadb:10.4
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: admin1234
+      MYSQL_DATABASE: fravega
+      MYSQL_USER: fravega-admin
+      MYSQL_PASSWORD: admin1234
+    hostname: mariadb-sucursal
+    ports:
+      - 3366:3306

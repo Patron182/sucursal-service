@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,13 +80,13 @@ public class BranchOfficeService {
                 .filter(branch -> branch.getId() == finalBranchId)
                 .findFirst();
 
-        if (nearestBranch.isPresent()) {
-            log.info("La sucursal mas cercana es {}, esta a {} metros", nearestBranch.get().getDireccion(),
-                    distance);
-            return toModel(nearestBranch.get());
-        } else {
+        if (nearestBranch.isEmpty()) {
             throw new BranchOfficeException(BranchOfficeErrorCode.BRANCH_OFFICE_NOT_FOUND);
         }
+
+        log.info("La sucursal mas cercana es {}, esta a {} metros", nearestBranch.get().getDireccion(),
+                new DecimalFormat("#.#").format(distance));
+        return toModel(nearestBranch.get());
     }
 
     private void validateBranchId(int id) {
